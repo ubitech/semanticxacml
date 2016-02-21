@@ -1,0 +1,23 @@
+package eu.paasword.semanticxacml.rules
+
+import eu.paasword.semanticxacml.facts.*;
+import eu.paasword.semanticxacml.facts.semantic.*;
+
+rule DenyAccess when
+    r : Request( age <= 18 )
+then
+    insertLogical( new AuthorizationResponse( AuthorizationResultType.DENY ) );
+end
+
+rule AllowAccess when
+    r : Request( age > 18 )
+then
+    insertLogical( new AuthorizationResponse( AuthorizationResultType.ALLOW ) );
+end
+
+rule AllowMoreAccess when
+    r : Request( age > 18 && islocatedAt.id == "111" )
+then
+    insertLogical( new AuthorizationResponse( AuthorizationResultType.TEST ) );
+end
+
